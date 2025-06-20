@@ -29,7 +29,7 @@ class LoginPage {
         return cy.get('.oxd-alert-content-text').should('be.visible').and('contain', 'Invalid credentials');
     }
 
-    getRequiredMessagee() {
+    getRequiredMessage() {
         return cy.get('.oxd-input-field-error-message').should('be.visible').contains('Required');
     }
 }

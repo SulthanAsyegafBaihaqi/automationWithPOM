@@ -2,11 +2,19 @@ import loginPages from "../pages/loginPages";
 import loginData from "../fixtures/loginData.json";
 
 describe('Login Negative Case', () => {
+
+    // menggunakan beforeEach() karena test memakai API yang sama
+    beforeEach(() => {
+        cy.intercept('GET', '/web/index.php/core/i18n/messages').as('getMessage');
+    });
+
     it('TC_Login_02 - Verif Login Invalid Password Credentials', () => {
         loginPages.visit();
         loginPages.fillUsername(loginData.invalidPassword.username);
         loginPages.fillPassword(loginData.invalidPassword.password);
         loginPages.clickLogin();
+
+        cy.wait('@getMessage').its('response.statusCode').should('eq', 200);
 
         loginPages.getErrorMessage();
     });
@@ -17,6 +25,8 @@ describe('Login Negative Case', () => {
         loginPages.fillPassword(loginData.invalidUsername.password);
         loginPages.clickLogin();
 
+        cy.wait('@getMessage').its('response.statusCode').should('eq', 200);
+
         loginPages.getErrorMessage();
     });
 
@@ -25,6 +35,8 @@ describe('Login Negative Case', () => {
         loginPages.fillUsername(loginData.invalidUsernamePassword.username);
         loginPages.fillPassword(loginData.invalidUsernamePassword.password);
         loginPages.clickLogin();
+
+        cy.wait('@getMessage').its('response.statusCode').should('eq', 200);
 
         loginPages.getErrorMessage();
     });
@@ -35,6 +47,6 @@ describe('Login Negative Case', () => {
         loginPages.fillPassword(loginData.invalidEmpty.password);
         loginPages.clickLogin();
 
-        loginPages.getRequiredMessagee().should('contain', 'Required');
+        loginPages.getRequiredMessage().should('contain', 'Required');
     });
 });

@@ -17,9 +17,10 @@ class LogoutPages {
 
     clickUserDropdown() {
         cy.get('.oxd-userdropdown').click();
-        cy.get('.oxd-dropdown-menu')
-            .should('be.visible').and('contain', 'Logout')
-            .click();
+    }
+
+    clickLogout() {
+        cy.contains('Logout').click();
     }
 }
 
